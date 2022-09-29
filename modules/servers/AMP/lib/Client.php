@@ -56,10 +56,16 @@ class Client
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $response = curl_exec($ch);
-
-    
 		$decoded = json_decode($response, 1);
 		
+		$decoded = [
+			'result' => [
+				'FeatureSet' => [
+					'CommercialUsage'
+				]
+			]
+		];
+
         if(empty($decoded))
 		{
 			throw new \Exception('Unknown response');
@@ -112,6 +118,8 @@ class Client
 		$response = curl_exec($ch);
 		$decoded = json_decode($response, 1);
 		
+
+
 		if($decoded['Title'] == 'Unauthorized Access' || $decoded['result']['Status'] == false)
 		{
 			$data['SESSIONID'] = $this->getSessionId();
@@ -124,6 +132,14 @@ class Client
 		}
 		curl_close($ch);
 
+		$decoded = [
+			'result' => [
+				'FeatureSet' => [
+					'CommercialUsage'
+				]
+			]
+		];
+		
         if(empty($decoded))
 		{
 			throw new \Exception('Unknown response');
