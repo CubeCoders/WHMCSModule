@@ -133,7 +133,7 @@ function AMP_ConfigOptions()
         $script = '';
         if(!empty($errors))
         {
-            $script = '<script>$("#tab3").prepend(\'<div class="alert alert-warning" role="alert">'.$errors.'</div>\')</script>';
+            $script = '<script>$("#ampAlert").remove(); $("#tab3").prepend(\'<div id="ampAlert" class="alert alert-warning" role="alert">'.$errors.'</div>\')</script>';
         }
   
 
@@ -144,6 +144,28 @@ function AMP_ConfigOptions()
             $options[$t['Id']] = $t['Name'];
         }
 
+        $scriptExtraProvisionSettings = '
+        <script>
+        $(\'[name="packageconfigoption[4]"]\').hide();
+        clone.appendTo($(\'[name="packageconfigoption[4]"]\').parent()).show();
+
+        
+            formEl = document.getElementById("extraProvisionSettingsForm");
+            tbodyEl = document.getElementById("extraProvisionSettingsTableBody");
+            tableEl = document.getElementById("extraProvisionSettingsTable");
+            formEl.addEventListener("submit", onAddWebsite);
+            tableEl.addEventListener("click", onDeleteRow);
+
+         
+            try {
+                a = JSON.parse($(\'[name="packageconfigoption[4]"]\').val());
+                tbodyEl.innerHTML = "";
+                for (const element of a) {
+                    tbodyEl.innerHTML += \'<tr><td>\'+element[0]+\'</td><td>\'+element[1]+\'</td><td><button class="btn btn-danger deleteBtn">Delete</button></td> </tr>\';
+                }  
+                 } catch(e) {}
+
+            </script>';
         $fields = [
             'Provisioning Template' => array(
                 'Type' => 'dropdown',
@@ -160,7 +182,20 @@ function AMP_ConfigOptions()
                     30 => 'Full application startup',
                 ],
                 'Description' => 'Choose one'.$script,
-            )
+            ),
+            'Required Tags' => array(
+                'Type' => 'text',
+                'Size' => '25',
+                'Default' => '',
+                'Description' => 'comma separated',
+            ),
+            'Extra Provision Settings' => array(
+                'Type' => 'text',
+                'Size' => '25',
+                'Default' => '',
+                'Description' => $scriptExtraProvisionSettings,
+            ),
+             
         ];
         return $fields;
 
@@ -229,6 +264,7 @@ function AMP_TestConnection(array $params)
 
 function AMP_CreateAccount(array $params)
 {
+
     try {
         AMP_commercialCheck($params);
         $client = new Client($params);
@@ -245,11 +281,18 @@ function AMP_CreateAccount(array $params)
             }
         }
         
-        $username = $params['userid'].$params['serviceid'];
+        $t = str_replace("-", "", $params['clientsdetails']['uuid']);
+        $username = str_replace('==','', base64_encode(pack("h*", $t)));
+
         $password = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 
         Capsule::table('tblhosting')->updateOrInsert(['id' => $params['serviceid']], ['username' => $username, 'password' => encrypt($password)]);
 
+        $array = json_decode($params['configoption4']);
+        $extraProvisionSettings = [];
+        foreach ($array as $key => $value) {
+            $extraProvisionSettings[$value[0]] = $value[1];
+        }
         $data = [
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
@@ -257,7 +300,9 @@ function AMP_CreateAccount(array $params)
             'Tag' => $params['model']->orderid,
             'FriendlyName' => '',
             'Secret' => 'secretwhmcs'. $params['serviceid'],
-            'PostCreate' => $postCreate
+            'PostCreate' => $postCreate,
+            'RequiredTags' => explode(',', trim($params['configoption3'])),
+            'ExtraProvisionSettings' => $extraProvisionSettings
         ];
 
 
