@@ -265,11 +265,11 @@ function AMP_TestConnection(array $params)
 function AMP_CreateAccount(array $params)
 {
     try {
-        //AMP_commercialCheck($params);
+        AMP_commercialCheck($params);
         $client = new Client($params);
         $provisioningTemplateId = $params['configoption1'];
         $postCreate = !empty($params['configoption2']) ? $params['configoption2'] : 10;
-        //$templates = $client->call('ADSModule/GetDeploymentTemplates');
+        $templates = $client->call('ADSModule/GetDeploymentTemplates');
 
         $options = [];
         foreach ($templates['result'] as $t) {
