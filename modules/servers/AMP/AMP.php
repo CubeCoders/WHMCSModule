@@ -264,7 +264,6 @@ function AMP_TestConnection(array $params)
 
 function AMP_CreateAccount(array $params)
 {
-
     try {
         AMP_commercialCheck($params);
         $client = new Client($params);
@@ -293,6 +292,20 @@ function AMP_CreateAccount(array $params)
         foreach ($array as $key => $value) {
             $extraProvisionSettings[$value[0]] = $value[1];
         }
+
+        $requiredTags = explode(',', trim($params['configoption3']));
+
+        foreach ($params['configoptions'] as $key => $value) {
+            if($key[0] == '+')
+            {
+                $extraProvisionSettings[$key] = $value;
+            }
+            if($key[0] == '@')
+            {
+                $requiredTags[] = $value;
+            }
+        }
+
         $data = [
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
@@ -301,10 +314,9 @@ function AMP_CreateAccount(array $params)
             'FriendlyName' => '',
             'Secret' => 'secretwhmcs'. $params['serviceid'],
             'PostCreate' => $postCreate,
-            'RequiredTags' => explode(',', trim($params['configoption3'])),
+            'RequiredTags' => $requiredTags,
             'ExtraProvisionSettings' => $extraProvisionSettings
         ];
-
 
         Capsule::table('ampServices')->updateOrInsert(['serviceId' => $params['serviceid']], ['secret' => 'secretwhmcs'. $params['serviceid']]);
         $response = $client->call('ADSModule/DeployTemplate', $data);
