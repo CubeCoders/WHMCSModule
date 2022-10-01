@@ -22,8 +22,6 @@ class Client
             $session = Capsule::table('ampSessions')->where('serverId', $params['serverid'])->value('sessionId');
 		}		
 		$this->params->sessionId = !empty($session) ? $session : $this->getSessionId();
-
-
 	}
 
 	public function getEndpoint()
@@ -58,14 +56,6 @@ class Client
         $response = curl_exec($ch);
 		$decoded = json_decode($response, 1);
 		
-		$decoded = [
-			'result' => [
-				'FeatureSet' => [
-					'CommercialUsage'
-				]
-			]
-		];
-
         if(empty($decoded))
 		{
 			throw new \Exception('Unknown response');
@@ -118,8 +108,6 @@ class Client
 		$response = curl_exec($ch);
 		$decoded = json_decode($response, 1);
 		
-
-
 		if($decoded['Title'] == 'Unauthorized Access' || $decoded['result']['Status'] == false)
 		{
 			$data['SESSIONID'] = $this->getSessionId();
@@ -132,14 +120,6 @@ class Client
 		}
 		curl_close($ch);
 
-		$decoded = [
-			'result' => [
-				'FeatureSet' => [
-					'CommercialUsage'
-				]
-			]
-		];
-		
         if(empty($decoded))
 		{
 			throw new \Exception('Unknown response');
