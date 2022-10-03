@@ -280,8 +280,10 @@ function AMP_CreateAccount(array $params)
             }
         }
         
-        $t = str_replace("-", "", $params['clientsdetails']['uuid']);
-        $username = str_replace('==','', base64_encode(pack("h*", $t)));
+        $firstinitial = $params['clientsdetails']['firstname'][0];
+        $lastname = $params['clientsdetails']['lastname'];
+        $clientid = str_pad($params['clientsdetails']['client_id'], 4, '0', STR_PAD_LEFT);
+        $username = $firstinitial.$lastname.'#'.$id;
 
         $password = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 
@@ -311,7 +313,7 @@ function AMP_CreateAccount(array $params)
             'NewUsername' => $username,
             'NewPassword' => $password,
             'Tag' => $params['serviceid'],
-            'FriendlyName' => '',
+            'FriendlyName' => $username.' '.$params['serviceid'],
             'Secret' => 'secretwhmcs'. $params['serviceid'],
             'PostCreate' => $postCreate,
             'RequiredTags' => $requiredTags,
