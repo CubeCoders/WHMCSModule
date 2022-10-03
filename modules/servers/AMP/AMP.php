@@ -296,11 +296,11 @@ function AMP_CreateAccount(array $params)
         $requiredTags = explode(',', trim($params['configoption3']));
 
         foreach ($params['configoptions'] as $key => $value) {
-            if($key[0] == '+')
+            if($key[0] == '+' || $key[0] == '$')
             {
                 $extraProvisionSettings[$key] = $value;
             }
-            if($key[0] == '@')
+            elseif($key[0] == '@')
             {
                 $requiredTags[] = $value;
             }
@@ -310,7 +310,7 @@ function AMP_CreateAccount(array $params)
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
             'NewPassword' => $password,
-            'Tag' => $params['model']->orderid,
+            'Tag' => $params['serviceid'],
             'FriendlyName' => '',
             'Secret' => 'secretwhmcs'. $params['serviceid'],
             'PostCreate' => $postCreate,
