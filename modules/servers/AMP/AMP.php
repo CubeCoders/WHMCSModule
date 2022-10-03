@@ -298,9 +298,9 @@ function AMP_CreateAccount(array $params)
         $requiredTags = explode(',', trim($params['configoption3']));
 
         foreach ($params['configoptions'] as $key => $value) {
-            if($key[0] == '+' || $key[0] == '$')
+            if($key[0] == '+')
             {
-                $extraProvisionSettings[$key] = $value;
+                $extraProvisionSettings[$key] = substr($value, 1);
             }
             elseif($key[0] == '@')
             {
