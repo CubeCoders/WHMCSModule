@@ -301,7 +301,7 @@ function AMP_CreateAccount(array $params)
         foreach ($params['configoptions'] as $key => $value) {
             if($key[0] == '+')
             {
-                $extraProvisionSettings[$key] = substr($value, 1);
+                $extraProvisionSettings[substr($key,1)] = $value;
             }
             elseif($key[0] == '@')
             {
