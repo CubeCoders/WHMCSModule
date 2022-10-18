@@ -283,7 +283,8 @@ function AMP_CreateAccount(array $params)
         $firstinitial = $params['clientsdetails']['firstname'][0];
         $lastname = $params['clientsdetails']['lastname'];
         $clientid = str_pad($params['clientsdetails']['client_id'], 4, '0', STR_PAD_LEFT);
-        $username = $firstinitial.$lastname.'#'.$id;
+        $username = $firstinitial.$lastname.'#'.$client_id;
+        $emailaddr = $params['clientsdetails']['email'];
 
         $password = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 
@@ -298,9 +299,9 @@ function AMP_CreateAccount(array $params)
         $requiredTags = explode(',', trim($params['configoption3']));
 
         foreach ($params['configoptions'] as $key => $value) {
-            if($key[0] == '+' || $key[0] == '$')
+            if($key[0] == '+')
             {
-                $extraProvisionSettings[$key] = $value;
+                $extraProvisionSettings[$key] = substr($value, 1);
             }
             elseif($key[0] == '@')
             {
@@ -312,6 +313,7 @@ function AMP_CreateAccount(array $params)
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
             'NewPassword' => $password,
+            'NewEmail' => $emailaddr,
             'Tag' => $params['serviceid'],
             'FriendlyName' => $username.' '.$params['serviceid'],
             'Secret' => 'secretwhmcs'. $params['serviceid'],
