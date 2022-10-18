@@ -284,6 +284,7 @@ function AMP_CreateAccount(array $params)
         $lastname = $params['clientsdetails']['lastname'];
         $clientid = str_pad($params['clientsdetails']['client_id'], 4, '0', STR_PAD_LEFT);
         $username = $firstinitial.$lastname.'#'.$client_id;
+        $emailaddr = $params['clientsdetails']['email'];
 
         $password = sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 
@@ -312,6 +313,7 @@ function AMP_CreateAccount(array $params)
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
             'NewPassword' => $password,
+            'NewEmail' => $emailaddr,
             'Tag' => $params['serviceid'],
             'FriendlyName' => $username.' '.$params['serviceid'],
             'Secret' => 'secretwhmcs'. $params['serviceid'],
