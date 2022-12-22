@@ -3,22 +3,23 @@
 use WHMCS\Database\Capsule;
 
 add_hook('EmailPreSend', 1, function($vars) {
-    if($vars['service_id'])
+    if($vars['messageid'] == 'AMP Welcome Email' && $vars['relid'])
     {
-        $service = Capsule::table('ampServices')->where('serviceId', $vars['service_id'])->first();   
-        $serverId = Capsule::table('tblhosting')->where('id', $vars['service_id'])->value('server');   
-        
+        $relid = $vars['relid'];
+
+        $service = Capsule::table('ampServices')->where('serviceId', $relid)->first();   
+        $serverId = Capsule::table('tblhosting')->where('id', $relid)->value('server');
         $server = Capsule::table('tblservers')->where('id', $serverId)->first();
     
-        $endpoint = (!empty( $server->hostname) ?  $server->hostname: $server->ipaddress);
+        $endpoint = (!empty($server->hostname) ? $server->hostname: $server->ipaddress);
         $endpoint =  (!empty($server->secure) ? 'https://' : 'http://' ). $endpoint ;
      
         $endpoint = $endpoint .  ((!empty($server->port) && $server->secure != true ) ? ':'.$params['serverport'] : '');
     
         $merge_fields = [];
-        $merge_fields['ampEndpoints'] =  json_decode($service->endpoints, 1);
-
+        $merge_fields['ampEndpoints'] = json_decode($service->endpoints, 1);
         $merge_fields['ampApplicationUrl'] = $endpoint . '/?instance='. $service->instanceId;
+        $merge_fields['ampInstanceId'] = $service->instanceId;
     
         return $merge_fields;
     }
@@ -149,7 +150,7 @@ add_hook('AdminAreaFooterOutput', 1, function($vars) {
             var tableRow = table.rows[i]; 
             var rowData = []; 
             for (var j=0; j<tableRow.cells.length - 1; j++) { 
-                rowData.push(tableRow.cells[j].innerHTML);; 
+                rowData.push(tableRow.cells[j].innerHTML);
             } 
             data.push(rowData); 
         } 
