@@ -42,7 +42,7 @@ function AMP_ConfigOptions()
                         $table->text('secret');
                         $table->text('targetId');
                         $table->text('instanceId');
-                        $table->text('endpoints');
+                        $table->longText('endpoints');
                     }
                 ); 
         }else
@@ -51,7 +51,7 @@ function AMP_ConfigOptions()
             {
                 Capsule::schema()->table('ampServices', function($table)
                 {
-                    $table->string('endpoints');
+                    $table->longText('endpoints');
                 });
             }
         }
