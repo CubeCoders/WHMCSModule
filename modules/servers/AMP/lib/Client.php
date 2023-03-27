@@ -104,7 +104,7 @@ class Client
 		];
 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
+		logModuleCall("AMP", $query, $post, $response);
 		$response = curl_exec($ch);
 		$decoded = json_decode($response, 1);
 		
