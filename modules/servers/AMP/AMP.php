@@ -471,21 +471,37 @@ function AMP_AdminServicesTabFields(array $params)
             }
             return [
                 'State' => $instance['Running'] ? 'Running' : 'Stopped',
-                'Instance ID' =>  $service->instanceId,
-                'Target ID' =>  $service->targetId,
+                'Instance ID' => '<input type="hidden" name="amp_original_instanceId" value="' . htmlspecialchars($service->instanceId) . '" />'
+                . '<input type="text" name="amp_instance_id" value="' . htmlspecialchars($service->instanceId) . '" />',
+                'Target ID' => '<input type="hidden" name="amp_original_targetId" value="' . htmlspecialchars($service->targetId) . '" />'
+                . '<input type="text" name="amp_target_id" value="' . htmlspecialchars($service->targetId) . '" />',
             ] + $vars;  
 
         } catch (\Exception $e) {
             return ['Error' => $e->getMessage()];
-        }
-
-
-
-
-       
-        
+        } 
     }
     return [];
+}
+
+function AMP_AdminServicesTabFieldsSave(array $params)
+{
+    if (isset($_POST['amp_original_instanceId']) && isset($_POST['amp_original_targetId'])) {
+        $existingInstanceId = $_POST['amp_original_instanceId'];
+        $existingTargetId = $_POST['amp_original_targetId'];
+        $newInstanceId = isset($_POST['amp_instance_id']) ? trim($_POST['amp_instance_id']) : '';
+        $newTargetId = isset($_POST['amp_target_id']) ? trim($_POST['amp_target_id']) : '';
+        if ($newInstanceId != $existingInstanceId || $newTargetId != $existingTargetId) {
+            $updateFields = [];
+            if ($newInstanceId != $existingInstanceId) {
+                $updateFields['instanceId'] = $newInstanceId;
+            }
+            if ($newTargetId != $existingTargetId) {
+                $updateFields['targetId'] = $newTargetId;
+            }
+            Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->update($updateFields);
+        }
+    }
 }
 
 function AMP_ClientArea(array $params)
@@ -522,6 +538,12 @@ function AMP_ClientArea(array $params)
                 $m = ($result == 'success') ? 'Application password has ben reseted successfully' : $result;
                 echo json_encode(['result' => $r, 'message' => $m]);   
             break;
+            case 'ClearInstanceFromWHMCS':
+                $result = AMP_ClearInstanceFromWHMCS($params);
+                $r = ($result == 'success') ? 'success' : 'failure';
+                $m = ($result == 'success') ? 'Dismissed tasks' : $result;
+                echo json_encode(['result' => $r, 'message' => $m]);
+            break;             
         }
         die;
     }
@@ -565,6 +587,7 @@ function AMP_AdminCustomButtonArray()
         "Stop Instance" => "stopInstance",
         "Restart Instance" => "restartInstance",
         "Reset Password" => "resetPassword",
+        "Clear Instance" => "ClearInstanceFromWHMCS",
     );
 }
 
@@ -687,3 +710,17 @@ function AMP_commercialCheck(array $params)
     }
 }
 
+function AMP_ClearInstanceFromWHMCS(array $params)
+{
+    try {
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
+        Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->delete();
+
+        //removeOldTasks($client);
+
+        return 'success';
+
+    } catch (\Exception $e) {
+        return $e->getMessage();
+    }
+}
