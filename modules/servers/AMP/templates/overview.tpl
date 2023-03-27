@@ -36,7 +36,7 @@
     </div>
 
 {if !empty($endpoints) }
-<div class="panel panel-success">
+<div class="panel panel-primary">
   <div class="panel-heading">Endpoints</div>
   <div class="panel-body" >
 
