@@ -42,7 +42,7 @@ function AMP_ConfigOptions()
                         $table->text('secret');
                         $table->text('targetId');
                         $table->text('instanceId');
-                        $table->text('endpoints');
+                        $table->longText('endpoints');
                     }
                 ); 
         }else
@@ -51,7 +51,7 @@ function AMP_ConfigOptions()
             {
                 Capsule::schema()->table('ampServices', function($table)
                 {
-                    $table->string('endpoints');
+                    $table->longText('endpoints');
                 });
             }
         }
@@ -469,8 +469,13 @@ function AMP_AdminServicesTabFields(array $params)
             {
                 $vars[$e['DisplayName']] = $e['Uri'] ? ('<a target="_blank" href="'.$e['Uri'].'" target="_blank">'.$e['Endpoint'].'</a>') :  $e['Endpoint'];
             }
+            if ($instance){
+                $instanceState= $instance['Running'] ? 'Running' : 'Stopped';
+            }else{
+                $instanceState='Invalid Instance ID';
+            }
             return [
-                'State' => $instance['Running'] ? 'Running' : 'Stopped',
+                'State' => $instanceState,
                 'Instance ID' => '<input type="hidden" name="amp_original_instanceId" value="' . htmlspecialchars($service->instanceId) . '" />'
                 . '<input type="text" name="amp_instance_id" value="' . htmlspecialchars($service->instanceId) . '" />',
                 'Target ID' => '<input type="hidden" name="amp_original_targetId" value="' . htmlspecialchars($service->targetId) . '" />'
@@ -565,7 +570,12 @@ function AMP_ClientArea(array $params)
             }
         }
 
-        $vars['state'] = $instance['Running'] ? 'Running' : 'Stopped';
+        if ($instance){
+            $instanceState = $instance['Running'] ? 'Running' : 'Stopped';
+          }else{
+            $instanceState='Invalid Instance ID - Contact Support';
+          }
+        $vars['state'] = $instanceState;
 
     }
     else

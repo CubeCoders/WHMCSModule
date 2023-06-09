@@ -28,6 +28,7 @@ add_hook('EmailPreSend', 1, function($vars) {
 if($_REQUEST['ampCallback'] == 1)
 {
     $data = json_decode(file_get_contents('php://input'), 1);
+    logModuleCall("AMP", "callback", "", $data);
     if($data['Success'] == true && !empty($data['Secret']) && !empty($data['TargetId']) && !empty($data['InstanceId']))
     {
         if($data['Action'] == 'Create')
