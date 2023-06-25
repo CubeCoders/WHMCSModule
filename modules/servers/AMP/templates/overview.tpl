@@ -29,36 +29,50 @@
 
 
 <div class="panel panel-primary">
-  <div class="panel-heading">Application URL</div>
+  <div class="panel-heading"><h4>Game Server Control Panel</h4></div>
   <div class="panel-body">
+  <p>You can access the link below to log in and manage your Game Server, which includes controlling settings, plugins, mods, backups and much more.</p>
+  <p><b>Tip:</b> Make sure your Instance is Runnings before trying to access this link</p>
+  <button style="margin-left: 16px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-default">Open Game Server Control Panel</button>
+  <p>&nbsp;</p>
+  <p>Alternatively you can Bookmark the below link for quick refference</p>
   <a href="{$appUrl}/?instance={$instanceId}" target="_blank">{$appUrl}/?instance={$instanceId}</a>
   </div>
     </div>
 
-{if !empty($endpoints) }
+{if !empty($endpoints)}
 <div class="panel panel-primary">
-  <div class="panel-heading">Endpoints</div>
+  <div class="panel-heading"><h4>How to connect to your game</h4></div>
   <div class="panel-body" >
 
   {foreach $endpoints as $e}
-  <h4>{$e['DisplayName']}</h4>{if !empty($e['Uri'])}
-  <a target="_blank" href="{$e['Uri']}" style="vertical-align: middle;" target="_blank">{$e['Endpoint']}</a>
-  {else}{$e['Endpoint']}{/if}
+    <h6>{$e['DisplayName']}</h6>
+    {assign var='cleanAppUrl' value=$appUrl|replace:'https://':''|replace:'http://':''}
+    {if $e['Endpoint']}
+      {assign var='parts' value=":"|explode:$e['Endpoint']}
+      <a target="_blank" href="{$cleanAppUrl}:{$parts[1]}" style="vertical-align: middle;" target="_blank">{$cleanAppUrl}:{$parts[1]}</a>
+    {else}
+      {$e['Endpoint']}
+    {/if}
 
-  <button style="margin-left: 16px;" onclick="copyToClipboard('{$e['Endpoint']}')" class="btn btn-default" >Copy to clipboard</button>
+    <button style="margin-left: 16px;" onclick="copyToClipboard('{$cleanAppUrl}:{$parts[1]}')" class="btn btn-default">Copy to clipboard</button>
 
- <hr>
-
+    <hr>
   {/foreach}
+
+  </div>
 </div>
-  
-    </div>
 {/if}
+
+
+
+
+
     <div class="panel panel-default">
-  <div class="panel-heading">Application Management</div>
+  <div class="panel-heading"><h4>Application Management</h4></div>
   <div class="panel-body">
 
-<h2>Status: <span id="status"></span></h2>
+<h5>Status: <span id="status"></span></h5>
 <button id="start" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Start Instance</button>
 <button id="stop" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Stop Instance</button>
 <button id="restart" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Restart Instance</button>
@@ -93,7 +107,7 @@ top:40px;
 right: 50px; 
   display: inline-block;
   width: 50px;
-  height: 50px;
+  height: 20px;
   border: 3px solid rgba(255,255,255,.3);
   border-radius: 50%;
   border-top-color: rgb(0, 0, 0);
