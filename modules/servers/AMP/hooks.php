@@ -2,28 +2,38 @@
 
 use WHMCS\Database\Capsule;
 
-add_hook('EmailPreSend', 1, function($vars) {
-    if($vars['messageid'] == 'AMP Welcome Email' && $vars['relid'])
+add_hook('EmailPreSend', 2, function($vars) {
+    if($vars['relid'])
     {
         $relid = $vars['relid'];
 
-        $service = Capsule::table('ampServices')->where('serviceId', $relid)->first();   
+        $service = Capsule::table('ampServices')->where('serviceId', $relid)->first();
         $serverId = Capsule::table('tblhosting')->where('id', $relid)->value('server');
         $server = Capsule::table('tblservers')->where('id', $serverId)->first();
-    
+
         $endpoint = (!empty($server->hostname) ? $server->hostname: $server->ipaddress);
         $endpoint =  (!empty($server->secure) ? 'https://' : 'http://' ). $endpoint ;
-     
+
         $endpoint = $endpoint .  ((!empty($server->port) && $server->secure != true ) ? ':'.$params['serverport'] : '');
-    
+
         $merge_fields = [];
         $merge_fields['ampEndpoints'] = json_decode($service->endpoints, 1);
         $merge_fields['ampApplicationUrl'] = $endpoint . '/?instance='. $service->instanceId;
         $merge_fields['ampInstanceId'] = $service->instanceId;
-    
+
+        // Fetch the instance ID from the database
+        $instanceId = Capsule::table('ampServices')->where('serviceid', $vars['relid'])->value('instanceid');
+
+        // If instance ID exists, add it to the template variables
+        if($instanceId) {
+            $merge_fields['service_instance_id'] = $instanceId;
+        }
+
         return $merge_fields;
     }
 });
+
+
 
 if($_REQUEST['ampCallback'] == 1)
 {
@@ -34,18 +44,19 @@ if($_REQUEST['ampCallback'] == 1)
         if($data['Action'] == 'Create')
         {
             Capsule::table('ampServices')->updateOrInsert(['secret' => $data['Secret'], 'instanceId' => ''], ['instanceId' => $data['InstanceId'], 'targetId' => $data['TargetId'], 'endpoints' => json_encode($data['Endpoints'])]);
-                
-            $serviceId = Capsule::table('ampServices')->where('secret', $data['Secret'])->value('serviceId');   
-    
+
+            $serviceId = Capsule::table('ampServices')->where('secret', $data['Secret'])->value('serviceId');
+
             if(!empty($serviceId))
             {
                 $command = 'SendEmail';
                 $postData = array(
+                  //The below sets which template should be sent once the Instance is provisioned
                     'messagename' => 'AMP Welcome Email',
                     'id' => $serviceId
                 );
                 localAPI($command, $postData);
-        
+
                 Capsule::table('ampTasks')->where('serviceId', $serviceId)->delete();
             }
         }
@@ -53,14 +64,14 @@ if($_REQUEST['ampCallback'] == 1)
         {
             Capsule::table('ampServices')->where('secret', $data['Secret'])->where('instanceId', $data['InstanceId'])->update(
                 ['endpoints' => json_encode($data['Endpoints'])]
-            );      
-   
+            );
+
         }
- 
+
 
     }elseif($data['Success'] == false && $data['Secret'] && $data['Action'] == 'Create')
     {
-        $serviceId = Capsule::table('ampServices')->where('secret', $data['Secret'])->value('serviceId');   
+        $serviceId = Capsule::table('ampServices')->where('secret', $data['Secret'])->value('serviceId');
         if(!empty($serviceId))
         {
             $task =  Capsule::table('ampTasks')->where('serviceId', $serviceId)->first();
@@ -104,12 +115,12 @@ add_hook('AdminAreaFooterOutput', 1, function($vars) {
         <label for="website">Value</label>
         <input class="form-control" type="text" name="extraProvisionSettingsValue" id="extraProvisionSettingsValue" />
       </div>
-   
+
       <button class="btn btn-success">Add</button>
-    
+
       </div>
-    
-  
+
+
     </form>
     <table id="extraProvisionSettingsTable" class="datatable">
       <thead>
@@ -145,17 +156,17 @@ add_hook('AdminAreaFooterOutput', 1, function($vars) {
       clone = $('#extraProvisionSettingsMain').clone();
       $('#extraProvisionSettingsMain').remove();
 
-      function tableToJson(table) { 
+      function tableToJson(table) {
         var data = [];
-        for (var i=1; i<table.rows.length; i++) { 
-            var tableRow = table.rows[i]; 
-            var rowData = []; 
-            for (var j=0; j<tableRow.cells.length - 1; j++) { 
+        for (var i=1; i<table.rows.length; i++) {
+            var tableRow = table.rows[i];
+            var rowData = [];
+            for (var j=0; j<tableRow.cells.length - 1; j++) {
                 rowData.push(tableRow.cells[j].innerHTML);
-            } 
-            data.push(rowData); 
-        } 
-        return data; 
+            }
+            data.push(rowData);
+        }
+        return data;
       }
 
       function onAddWebsite(e) {
