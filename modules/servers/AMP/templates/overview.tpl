@@ -35,7 +35,7 @@
             <div class="col-sm-8">
                 <p>Manage your Game Server Console to control a wide range of functions, including controlling settings, plugins, mods, backups, and many other features.</p>
             </div>
-            <div class="col-sm-4 text-right">
+            <div class="col-sm-4 text-sm-right text-center">
                 <button style="margin-left: 0px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-success">Open Game Server Control Panel</button>
             </div>
         </div>
@@ -75,18 +75,18 @@
 
 
 
-    <div class="panel panel-default">
-  <div class="panel-heading"><h4>Application Management</h4></div>
-  <div class="panel-body">
-
-<h5>Status: <span id="status"></span></h5>
-<button id="start" class="btn btn-success" data-toggle="modal" data-target="#confirmModal">Start Instance</button>
-<button id="stop" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Stop Instance</button>
-<button id="restart" class="btn btn-warning" data-toggle="modal" data-target="#confirmModal">Restart Instance</button>
-<button id="resetPassword" class="btn btn-info" data-toggle="modal" data-target="#confirmModal">Reset Password</button>
-
-  </div>
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Application Management</h4></div>
+    <div class="panel-body">
+        <h5>Status: <span id="status"></span></h5>
+        <div class="text-sm-left text-center">
+            <button id="start" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Start Instance</button>
+            <button id="stop" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Stop Instance</button>
+            <button id="restart" class="btn btn-warning" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Restart Instance</button>
+            <button id="resetPassword" class="btn btn-info" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Reset Password</button>
+        </div>
     </div>
+</div>
 {/if}
 
 
