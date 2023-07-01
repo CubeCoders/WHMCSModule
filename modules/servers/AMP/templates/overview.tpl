@@ -29,20 +29,27 @@
 
 
 <div class="panel panel-primary">
-  <div class="panel-heading"><h4>Game Server Control Panel</h4></div>
-  <div class="panel-body">
-  <p>You can access the link below to log in and manage your Game Server, which includes controlling settings, plugins, mods, backups and much more.</p>
-  <p><b>Tip:</b> Make sure your Instance is Runnings before trying to access this link</p>
-  <button style="margin-left: 16px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-default">Open Game Server Control Panel</button>
-  <p>&nbsp;</p>
-  <p>Alternatively you can Bookmark the below link for quick refference</p>
-  <a href="{$appUrl}/?instance={$instanceId}" target="_blank">{$appUrl}/?instance={$instanceId}</a>
-  </div>
+    <div class="panel-heading"><h4>Game Server Control Panel</h4></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <p>Manage your Game Server Console to control a wide range of functions, including controlling settings, plugins, mods, backups, and many other features.</p>
+            </div>
+            <div class="col-sm-4 text-right">
+                <button style="margin-left: 0px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-success">Open Game Server Control Panel</button>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="alert alert-info">
+            <strong>Tip:</strong> If you can't access your console, make sure your Instance is Running below.
+        </div>
     </div>
+</div>
+
 
 {if !empty($endpoints)}
 <div class="panel panel-primary">
-  <div class="panel-heading"><h4>How to connect to your game</h4></div>
+  <div class="panel-heading"><h4>Server Endpoints</h4></div>
   <div class="panel-body" >
 
   {foreach $endpoints as $e}
@@ -73,10 +80,10 @@
   <div class="panel-body">
 
 <h5>Status: <span id="status"></span></h5>
-<button id="start" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Start Instance</button>
-<button id="stop" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Stop Instance</button>
-<button id="restart" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Restart Instance</button>
-<button id="resetPassword" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Reset Password</button>
+<button id="start" class="btn btn-success" data-toggle="modal" data-target="#confirmModal">Start Instance</button>
+<button id="stop" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Stop Instance</button>
+<button id="restart" class="btn btn-warning" data-toggle="modal" data-target="#confirmModal">Restart Instance</button>
+<button id="resetPassword" class="btn btn-info" data-toggle="modal" data-target="#confirmModal">Reset Password</button>
 
   </div>
     </div>
