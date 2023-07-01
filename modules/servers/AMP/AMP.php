@@ -177,9 +177,9 @@ function AMP_ConfigOptions()
                 'Options' => 
                 [
                     0 => 'Do nothing',
-                    10 => 'Start instance only',
-                    20 => 'Start instance and update application',
-                    30 => 'Full application startup',
+                    1 => 'Start instance only',
+                    2 => 'Start instance and update application',
+                    3 => 'Full instance and application startup',
                 ],
                 'Description' => 'Choose one'.$script,
             ),
