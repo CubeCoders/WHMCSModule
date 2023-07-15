@@ -145,6 +145,18 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 2. Click on Create a New Group and give it a name such as ‘AMP Product Options’ 
 3. From the Assigned Products select the products that these configurable options applies to
 4. Click on Add New Configurable Option
+5. Enter the configrable option that you would like to set from the list below and click Save Changes
+
+   <h3> Example Configurable Options</h3>
+
+		+$$ContainerCPUs|Server CPU Allocation
+			2|2 CPU Cores
+			4|4 CPU Cores
+   		+$$ContainerMemoryMB|RAM Allowance
+			1024|1 GB
+			2048|2 GB
+			4096|4 GB
+   
 
 
 <h2>FAQ’s</h2>
