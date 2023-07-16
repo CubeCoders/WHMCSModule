@@ -130,10 +130,10 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 - The **Provisioning Template** allows you to select your deployment template within AMP for specific server you want to deploy
 - Then select the **Post Create Action** from the below list depending on your desired outcome
 
-		**Do Nothing** = Creates instance and doesnt start the instance or application
-		**Start Instance** = Creates and starts the instance but doesnt start the application automatcially
-		**Start instance & update application** = Creates & Starts the instance and performs an application update.
-		**Full Instance & application startup** = Creates & Starts the instance and starts & updates the application and starts the application everytime the instance starts. (Providing no additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in)
+		Do Nothing = Creates instance and doesnt start the instance or application
+		Start Instance = Creates and starts the instance but doesnt start the application automatcially
+		Start instance & update application = Creates & Starts the instance and performs an application update.
+		Full Instance & application startup = Creates & Starts the instance and starts & updates the application and starts the application everytime the instance starts. (Providing no additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in)
   
 - Set the **Required Tags** field as per below
 - If you are running AMP in **Standalone** or Hybrid mode, enter the value ‘Local’
@@ -142,8 +142,8 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 - The **Update Every Tim**e option tells AMP if the application should be updated everytime the instance is started in teh future
 - The **Mode** selection allows you to specify how teh Endpoints are displayed in the Client section of WHMCS. For example:
   
-		**Standalone URL** will be displayed as https://yourdomain.com:25565
-		**Target/Node IP Address** will be displayed as 0.0.0.0:25565
+		Standalone URL will be displayed as https://yourdomain.com:25565
+		Target/Node IP Address will be displayed as 0.0.0.0:25565
   
 - Now select your preference for the Automatic Setup 
 
@@ -173,8 +173,6 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 			2048|2 GB
 			4096|4 GB
    
-
-
 <h2>FAQ’s</h2>
 
 Q: Do I need to set a Product Welcome Email in each product?
