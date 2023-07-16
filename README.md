@@ -4,17 +4,18 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 <h2>Installing the AMP WHMCS module</h2>
 
-1. Upload the package content into your MAIN WHMCS DIRECTORY.  (We recommend using an FTP Client)
-2. Login to WHMCS Admin Area 
-3. Navigate to System Settings -> Product & Services -> Servers
-4. Click on Add New Server 
+1. Download the .Zip file from this GitHub
+2. Upload the package content into your MAIN WHMCS DIRECTORY.  (We recommend using an FTP Client)
+3. Login to WHMCS Admin Area 
+4. Navigate to **System Settings -> Product & Services -> Servers**
+5. Click on **Add New Server** 
 
-- For the Module type, select AMP
+- For the Module type, select **AMP**
 - Enter the hostname for your AMP server followed by a Username and Password
 
 - Note: You should create a seperate AMP user for WHMCS with the Super Admin Role and ensure MFA is disabled for this user.
 
-5. Click Test Connection
+5. Click **Test Connection**
 
 - If the connection was successful you will see a green banner confirming the connection at the top
 
