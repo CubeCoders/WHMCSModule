@@ -15,19 +15,19 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 - Note: You should create a seperate AMP user for WHMCS with the Super Admin Role and ensure MFA is disabled for this user.
 
-5. Click **Test Connection**
+6. Click **Test Connection**
 
 - If the connection was successful you will see a green banner confirming the connection at the top
 
 - Enter a Name for this AMP server that will be displayed in WHMCS
 
-6. Click **Save Changes**
-7. From the Servers overview page click on **Create New Group** 
+7. Click **Save Changes**
+8. From the Servers overview page click on **Create New Group** 
 
 - Enter a Name for your AMP Server Group
 - Select your AMP Server(s) from the list and Add to Selected Servers
 
-8. Click **Save Changes**
+9. Click **Save Changes**
 
 <h2>Creating the AMP Welcome & Password Reset Email Template</h2>
 
@@ -99,9 +99,9 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 <h2>Set the callback function between AMP & WHMCS</h2>
 
-16. Login to your AMP Control Panel
-17. Navigate to **Configuration -> Instance Deployment**
-18. Set the Template deployment callback URL as follows :
+17. Login to your AMP Control Panel
+18. Navigate to **Configuration -> Instance Deployment**
+19. Set the Template deployment callback URL as follows :
 
 		https://WHMCS_URL/index.php?ampCallback=1
 		eg. https://example.com/index.php?ampCallback=1
@@ -111,8 +111,8 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 <h2>Setting up a Server Group & Product within WHMCS</h2>
 
-19. Navigate to **System Settings -> Products & Services -> Products/Services**
-20. Create New Product Group ( or use existing one )
+20. Navigate to **System Settings -> Products & Services -> Products/Services**
+21. Create New Product Group ( or use existing one )
 
 - Select **Create New Product**
 - For the Product Type, select **[Other]**
@@ -120,7 +120,7 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 - Enter a product name (For Example, Minecraft Java)
 - Click on the drop down menu for Module and select **AMP**
 
-21. Click on **Continue** 
+22. Click on **Continue** 
 
 - Click on the **Module Settings** tab
 - Ensure that Module Name is set to **AMP**
@@ -147,7 +147,7 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
   
 - Now select your preference for the Automatic Setup 
 
-22. Click **Save Changes**
+23. Click **Save Changes**
 
 ⚠️ Don’t forget to set the other configurations in the other tabs for this product such as pricing.
 
