@@ -166,38 +166,48 @@ function AMP_ConfigOptions()
                  } catch(e) {}
 
             </script>';
-        $fields = [
-            'Provisioning Template' => array(
-                'Type' => 'dropdown',
-                'Options' => $options,
-                'Description' => 'Choose one',
-            ),
-            'Post Create Action' => array(
-                'Type' => 'dropdown',
-                'Options' => 
-                [
-                    0 => 'Do nothing',
-                    1 => 'Start instance only',
-                    2 => 'Start instance and update application',
-                    3 => 'Full instance and application startup',
-                ],
-                'Description' => 'Choose one'.$script,
-            ),
-            'Required Tags' => array(
-                'Type' => 'text',
-                'Size' => '25',
-                'Default' => '',
-                'Description' => 'comma separated',
-            ),
-            'Extra Provision Settings' => array(
-                'Type' => 'text',
-                'Size' => '25',
-                'Default' => '',
-                'Description' => $scriptExtraProvisionSettings,
-            ),
-             
-        ];
-        return $fields;
+$fields = [
+    'Provisioning Template' => array(
+        'Type' => 'dropdown',
+        'Options' => $options,
+        'Description' => 'Choose a deployment template from AMP',
+    ),
+    'Post Create Action' => array(
+        'Type' => 'dropdown',
+        'Options' => 
+        [
+            0 => 'Do nothing',
+            1 => 'Start instance only',
+            2 => 'Start instance & update application',
+            3 => 'Full instance & application startup',
+        ],
+        'Description' => '<br><br>Choose what happens after AMP has created the instance'.$script,
+    ),
+    'Required Tags' => array(
+        'Type' => 'text',
+        'Size' => '25',
+        'Default' => '',
+        'Description' => '<br><br>Seperate the tags by using a comma. For more info, see module install guide',
+    ),  
+    'Extra Provision Settings' => array(
+        'Type' => 'text',
+        'Size' => '25',
+        'Default' => '',
+        'Description' => $scriptExtraProvisionSettings.'<br>',
+    ),
+	'Update Every Time' => array(
+        'Type' => 'yesno',
+        'Description' => 'Tick this box to update the application every time the instance starts in the future',
+    ),
+	"Mode" => array(
+         'Type' => 'dropdown',
+         'Options' => 'Standalone URL,Target/Node IP Address',
+         'Default' => 'Target/Node IP Address',
+         'Description' => '<br><br>Select how the Endpoints should be displayed on the Client section within WHMCS',
+        )
+];
+return $fields;
+
 
     } catch (\Exception $ex) {
         if (App::getFromRequest('action') != 'save') {
@@ -268,7 +278,11 @@ function AMP_CreateAccount(array $params)
         AMP_commercialCheck($params);
         $client = new Client($params);
         $provisioningTemplateId = $params['configoption1'];
-        $postCreate = !empty($params['configoption2']) ? $params['configoption2'] : 10;
+        $postCreate = !empty($params['configoption2']) ? $params['configoption2'] : 0;
+		// Check if the 'Every Time' box is ticked and if so, add 16 to the PostCreate value
+        if (!empty($params['configoption5'])) {
+            $postCreate += 16;
+		}
         $templates = $client->call('ADSModule/GetDeploymentTemplates');
 
         $options = [];
@@ -552,6 +566,9 @@ function AMP_ClientArea(array $params)
         }
         die;
     }
+	
+	    $vars['mode'] = isset($params['configoption6']) ? $params['configoption6'] : 'Standalone URL';
+
 
     if(!empty($service->instanceId))
     {
