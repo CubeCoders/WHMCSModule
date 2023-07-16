@@ -47,32 +47,49 @@
 </div>
 
 
-{if !empty($endpoints)}
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>Server Endpoints</h4></div>
-  <div class="panel-body" >
-
-  {foreach $endpoints as $e}
-    <h6>{$e['DisplayName']}</h6>
-    {assign var='cleanAppUrl' value=$appUrl|replace:'https://':''|replace:'http://':''}
-    {if $e['Endpoint']}
-      {assign var='parts' value=":"|explode:$e['Endpoint']}
-      <a target="_blank" href="{$cleanAppUrl}:{$parts[1]}" style="vertical-align: middle;" target="_blank">{$cleanAppUrl}:{$parts[1]}</a>
-    {else}
-      {$e['Endpoint']}
+{if $mode == 'Standalone URL'}
+    {if !empty($endpoints)}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>Server Endpoints</h4>
+            </div>
+            <div class="panel-body">
+                {foreach $endpoints as $e}
+                    <h6>{$e['DisplayName']}</h6>
+                    {assign var='cleanAppUrl' value=$appUrl|replace:'https://':''|replace:'http://':''}
+                    {if $e['Endpoint']}
+                        {assign var='parts' value=":"|explode:$e['Endpoint']}
+                        <a target="_blank" href="{$cleanAppUrl}:{$parts[1]}" style="vertical-align: middle;" target="_blank">{$cleanAppUrl}:{$parts[1]}</a>
+                    {else}
+                        {$e['Endpoint']}
+                    {/if}
+                    <button style="margin-left: 16px;" onclick="copyToClipboard('{$cleanAppUrl}:{$parts[1]}')" class="btn btn-default">Copy to clipboard</button>
+                    <hr>
+                {/foreach}
+            </div>
+        </div>
     {/if}
-
-    <button style="margin-left: 16px;" onclick="copyToClipboard('{$cleanAppUrl}:{$parts[1]}')" class="btn btn-default">Copy to clipboard</button>
-
-    <hr>
-  {/foreach}
-
-  </div>
-</div>
+{elseif $mode == 'Target/Node IP Address'}
+    {if !empty($endpoints)}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>Server Endpoints</h4>
+            </div>
+            <div class="panel-body">
+                {foreach $endpoints as $e}
+                    <h6>{$e['DisplayName']}</h6>
+                    {if !empty($e['Uri'])}
+                        <a target="_blank" href="{$e['Uri']}" style="vertical-align: middle;" target="_blank">{$e['Endpoint']}</a>
+                    {else}
+                        {$e['Endpoint']}
+                    {/if}
+                    <button style="margin-left: 16px;" onclick="copyToClipboard('{$e['Endpoint']}')" class="btn btn-default">Copy to clipboard</button>
+                    <hr>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
 {/if}
-
-
-
 
 
 <div class="panel panel-default">
