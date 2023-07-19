@@ -29,57 +29,81 @@
 
 
 <div class="panel panel-primary">
-  <div class="panel-heading"><h4>Game Server Control Panel</h4></div>
-  <div class="panel-body">
-  <p>You can access the link below to log in and manage your Game Server, which includes controlling settings, plugins, mods, backups and much more.</p>
-  <p><b>Tip:</b> Make sure your Instance is Runnings before trying to access this link</p>
-  <button style="margin-left: 16px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-default">Open Game Server Control Panel</button>
-  <p>&nbsp;</p>
-  <p>Alternatively you can Bookmark the below link for quick refference</p>
-  <a href="{$appUrl}/?instance={$instanceId}" target="_blank">{$appUrl}/?instance={$instanceId}</a>
-  </div>
+    <div class="panel-heading"><h4>Game Server Control Panel</h4></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <p>Manage your Game Server Console to control a wide range of functions, including controlling settings, plugins, mods, backups, and many other features.</p>
+            </div>
+            <div class="col-sm-4 text-sm-right text-center">
+                <button style="margin-left: 0px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-success">Open Game Server Control Panel</button>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="alert alert-info">
+            <strong>Tip:</strong> If you can't access your console, make sure your Instance is Running below.
+        </div>
     </div>
-
-{if !empty($endpoints)}
-<div class="panel panel-primary">
-  <div class="panel-heading"><h4>How to connect to your game</h4></div>
-  <div class="panel-body" >
-
-  {foreach $endpoints as $e}
-    <h6>{$e['DisplayName']}</h6>
-    {assign var='cleanAppUrl' value=$appUrl|replace:'https://':''|replace:'http://':''}
-    {if $e['Endpoint']}
-      {assign var='parts' value=":"|explode:$e['Endpoint']}
-      <a target="_blank" href="{$cleanAppUrl}:{$parts[1]}" style="vertical-align: middle;" target="_blank">{$cleanAppUrl}:{$parts[1]}</a>
-    {else}
-      {$e['Endpoint']}
-    {/if}
-
-    <button style="margin-left: 16px;" onclick="copyToClipboard('{$cleanAppUrl}:{$parts[1]}')" class="btn btn-default">Copy to clipboard</button>
-
-    <hr>
-  {/foreach}
-
-  </div>
 </div>
+
+
+{if $mode == 'Standalone URL'}
+    {if !empty($endpoints)}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>Server Endpoints</h4>
+            </div>
+            <div class="panel-body">
+                {foreach $endpoints as $e}
+                    <h6>{$e['DisplayName']}</h6>
+                    {assign var='cleanAppUrl' value=$appUrl|replace:'https://':''|replace:'http://':''}
+                    {if $e['Endpoint']}
+                        {assign var='parts' value=":"|explode:$e['Endpoint']}
+                        <a target="_blank" href="{$cleanAppUrl}:{$parts[1]}" style="vertical-align: middle;" target="_blank">{$cleanAppUrl}:{$parts[1]}</a>
+                    {else}
+                        {$e['Endpoint']}
+                    {/if}
+                    <button style="margin-left: 16px;" onclick="copyToClipboard('{$cleanAppUrl}:{$parts[1]}')" class="btn btn-default">Copy to clipboard</button>
+                    <hr>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+{elseif $mode == 'Target/Node IP Address'}
+    {if !empty($endpoints)}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>Server Endpoints</h4>
+            </div>
+            <div class="panel-body">
+                {foreach $endpoints as $e}
+                    <h6>{$e['DisplayName']}</h6>
+                    {if !empty($e['Uri'])}
+                        <a target="_blank" href="{$e['Uri']}" style="vertical-align: middle;" target="_blank">{$e['Endpoint']}</a>
+                    {else}
+                        {$e['Endpoint']}
+                    {/if}
+                    <button style="margin-left: 16px;" onclick="copyToClipboard('{$e['Endpoint']}')" class="btn btn-default">Copy to clipboard</button>
+                    <hr>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
 {/if}
 
 
-
-
-
-    <div class="panel panel-default">
-  <div class="panel-heading"><h4>Application Management</h4></div>
-  <div class="panel-body">
-
-<h5>Status: <span id="status"></span></h5>
-<button id="start" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Start Instance</button>
-<button id="stop" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Stop Instance</button>
-<button id="restart" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Restart Instance</button>
-<button id="resetPassword" class="btn btn-default" data-toggle="modal" data-target="#confirmModal">Reset Password</button>
-
-  </div>
+<div class="panel panel-default">
+    <div class="panel-heading"><h4>Application Management</h4></div>
+    <div class="panel-body">
+        <h5>Status: <span id="status"></span></h5>
+        <div class="text-sm-left text-center">
+            <button id="start" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Start Instance</button>
+            <button id="stop" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Stop Instance</button>
+            <button id="restart" class="btn btn-warning" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Restart Instance</button>
+            <button id="resetPassword" class="btn btn-info" data-toggle="modal" data-target="#confirmModal" style="min-width: 150px; margin-top: 2px;">Reset Password</button>
+        </div>
     </div>
+</div>
 {/if}
 
 
