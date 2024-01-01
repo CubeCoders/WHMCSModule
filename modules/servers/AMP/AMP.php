@@ -90,8 +90,8 @@ function AMP_ConfigOptions()
         $version = $client->version;
 
         $info = $client->call('Core/GetModuleInfo');
-        $ampVersion = $info['result']['AMPVersion'];
-        $featureSet = $info['result']['FeatureSet'];
+        $ampVersion = $info['AMPVersion'];
+        $featureSet = $info['FeatureSet'];
 
         $exploded = explode('.', $ampVersion);
 
@@ -223,7 +223,7 @@ function AMP_TestConnection(array $params)
     try {
         AMP_commercialCheck($params);
         $info = $client->call('Core/GetModuleInfo');
-        $ampVersion = $info['result']['AMPVersion'];
+        $ampVersion = $info['AMPVersion'];
         $exploded = explode('.', $ampVersion);
 
         if(count($exploded) == 1)
@@ -466,7 +466,7 @@ function AMP_AdminServicesTabFields(array $params)
             $client = new Client($params);
             
             $response = $client->call('ADSModule/GetGroup', [ 'GroupId' => $service->targetId ] );
-            foreach($response['result']['AvailableInstances'] as $i)
+            foreach($response['AvailableInstances'] as $i)
             {
                 if($i['InstanceID'] == $service->instanceId)
                 {
@@ -578,7 +578,7 @@ function AMP_ClientArea(array $params)
         $vars['instanceId'] = $service->instanceId;
 
         $response = $client->call('ADSModule/GetGroup', [ 'GroupId' => $service->targetId ] );
-        foreach($response['result']['AvailableInstances'] as $i)
+        foreach($response['AvailableInstances'] as $i)
         {
             if($i['InstanceID'] == $service->instanceId)
             {
@@ -723,9 +723,8 @@ function AMP_commercialCheck(array $params)
     $client = new Client($params);
     try {
         $info = $client->call('Core/GetModuleInfo');
-        $featureSet = $info['result']['FeatureSet'];
-
-		$commercial = in_array("CommercialUsage", $featureSet);
+        $featureSet = $info['FeatureSet'];
+	$commercial = in_array("CommercialUsage", $featureSet);
 
         if(!$commercial)
         {
