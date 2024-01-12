@@ -68,9 +68,9 @@ class Client
         }
 
 
-		if(!empty($decoded['result']['Reason']) && !$decoded['result']['Status'])
+		if(!empty($decoded['Reason']) && !$decoded['Status'])
 		{
-			throw new \Exception($decoded['result']['Reason']);
+			throw new \Exception($decoded['Reason']);
 		}
 
         curl_close($ch);
@@ -105,11 +105,11 @@ class Client
 		];
 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		logModuleCall("AMP", $query, $post, $response);
 		$response = curl_exec($ch);
+		logModuleCall("AMP", $query, $post, $response);
 		$decoded = json_decode($response, 1);
 
-		if($decoded['Title'] == 'Unauthorized Access' || $decoded['result']['Status'] == false)
+		if($decoded['Title'] == 'Unauthorized Access' || $decoded['Status'] == false)
 		{
 			$data['SESSIONID'] = $this->getSessionId();
 			$post = json_encode($data);
@@ -131,9 +131,9 @@ class Client
 			throw new \Exception($decoded['Message']);
 		}
 
-		if(!empty($decoded['result']['Reason']) && !$decoded['result']['Status'])
+		if(!empty($decoded['Reason']) && !$decoded['Status'])
 		{
-			throw new \Exception($decoded['result']['Reason']);
+			throw new \Exception($decoded['Reason']);
 		}
 
 		return $decoded;

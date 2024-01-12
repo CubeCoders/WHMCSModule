@@ -29,7 +29,7 @@ function AMP_ConfigOptions()
                         $table->integer('serverId');
                         $table->text('sessionId');
                     }
-                ); 
+                );
         }
 
         if (!Capsule::schema()->hasTable('ampServices')) {
@@ -44,7 +44,7 @@ function AMP_ConfigOptions()
                         $table->text('instanceId');
                         $table->longText('endpoints');
                     }
-                ); 
+                );
         }else
         {
             if (!Capsule::schema()->hasColumn('ampServices', 'endpoints'))
@@ -68,7 +68,7 @@ function AMP_ConfigOptions()
                         $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                         $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
                     }
-                ); 
+                );
         }
 
         $server = Capsule::table('tblservers')
@@ -135,12 +135,12 @@ function AMP_ConfigOptions()
         {
             $script = '<script>$("#ampAlert").remove(); $("#tab3").prepend(\'<div id="ampAlert" class="alert alert-warning" role="alert">'.$errors.'</div>\')</script>';
         }
-  
+
 
         $templates = $client->call('ADSModule/GetDeploymentTemplates');
 
         $options = [];
-        foreach ($templates['result'] as $t) {
+        foreach ($templates as $t) {
             $options[$t['Id']] = $t['Name'];
         }
 
@@ -149,20 +149,20 @@ function AMP_ConfigOptions()
         $(\'[name="packageconfigoption[4]"]\').hide();
         clone.appendTo($(\'[name="packageconfigoption[4]"]\').parent()).show();
 
-        
+
             formEl = document.getElementById("extraProvisionSettingsForm");
             tbodyEl = document.getElementById("extraProvisionSettingsTableBody");
             tableEl = document.getElementById("extraProvisionSettingsTable");
             formEl.addEventListener("submit", onAddWebsite);
             tableEl.addEventListener("click", onDeleteRow);
 
-         
+
             try {
                 a = JSON.parse($(\'[name="packageconfigoption[4]"]\').val());
                 tbodyEl.innerHTML = "";
                 for (const element of a) {
                     tbodyEl.innerHTML += \'<tr><td>\'+element[0]+\'</td><td>\'+element[1]+\'</td><td><button class="btn btn-danger deleteBtn">Delete</button></td> </tr>\';
-                }  
+                }
                  } catch(e) {}
 
             </script>';
@@ -174,7 +174,7 @@ $fields = [
     ),
     'Post Create Action' => array(
         'Type' => 'dropdown',
-        'Options' => 
+        'Options' =>
         [
             0 => 'Do nothing',
             1 => 'Start instance only',
@@ -188,7 +188,7 @@ $fields = [
         'Size' => '25',
         'Default' => '',
         'Description' => '<br><br>Seperate the tags by using a comma. For more info, see module install guide',
-    ),  
+    ),
     'Extra Provision Settings' => array(
         'Type' => 'text',
         'Size' => '25',
@@ -251,7 +251,7 @@ function AMP_TestConnection(array $params)
         }
         $errors = implode('. ', $errors);
 
-     
+
         if(!empty($errors))
         {
             return [
@@ -259,8 +259,8 @@ function AMP_TestConnection(array $params)
                 'error' => $errors,
             ];
         }
-          
-        
+
+
 
     } catch (\Exception $e) {
         return [
@@ -286,14 +286,14 @@ function AMP_CreateAccount(array $params)
         $templates = $client->call('ADSModule/GetDeploymentTemplates');
 
         $options = [];
-        foreach ($templates['result'] as $t) {
+        foreach ($templates as $t) {
             if($t['Id'] == $provisioningTemplateId)
             {
                 $templateName = $t['Name'];
                 break;
             }
         }
-        
+
         $firstinitial = $params['clientsdetails']['firstname'][0];
         $lastname = $params['clientsdetails']['lastname'];
         $clientid = str_pad($params['clientsdetails']['client_id'], 4, '0', STR_PAD_LEFT);
@@ -345,8 +345,8 @@ function AMP_CreateAccount(array $params)
             Capsule::table('ampTasks')->updateOrInsert(['serviceId' => $params['serviceid']], ['type' => 'redeploy', 'tried' => 0]);
         }
 
-       
-        
+
+
 
 
         return 'success';
@@ -359,7 +359,7 @@ function AMP_TerminateAccount(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -382,7 +382,7 @@ function AMP_SuspendAccount(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -405,7 +405,7 @@ function AMP_UnsuspendAccount(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -428,15 +428,15 @@ function AMP_ChangePackage(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();          
-        $provisioningTemplateId = $params['configoption1'];          
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
+        $provisioningTemplateId = $params['configoption1'];
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
         }
 
         $client = new Client($params);
-        $data = [ 
+        $data = [
             'InstanceID' => $service->instanceId,
             'TemplateID' => $provisioningTemplateId,
             'Secret' => 'secretwhmcs'. $params['serviceid'],
@@ -461,10 +461,10 @@ function AMP_AdminServicesTabFields(array $params)
                 'Status' => 'Awaiting callback'
             ];
         }
-        
+
         try {
             $client = new Client($params);
-            
+
             $response = $client->call('ADSModule/GetGroup', [ 'GroupId' => $service->targetId ] );
             foreach($response['AvailableInstances'] as $i)
             {
@@ -476,7 +476,7 @@ function AMP_AdminServicesTabFields(array $params)
             }
 
             $endpoint = $service->endpointUri ? ('<a target="_blank" href="'.$service->endpointUri.'" target="_blank">'.$service->endpoint.'</a>') :  $service->endpoint;
-            
+
             $endpoints = json_decode($service->endpoints, 1);
 
             foreach($endpoints as $e)
@@ -494,11 +494,11 @@ function AMP_AdminServicesTabFields(array $params)
                 . '<input type="text" name="amp_instance_id" value="' . htmlspecialchars($service->instanceId) . '" />',
                 'Target ID' => '<input type="hidden" name="amp_original_targetId" value="' . htmlspecialchars($service->targetId) . '" />'
                 . '<input type="text" name="amp_target_id" value="' . htmlspecialchars($service->targetId) . '" />',
-            ] + $vars;  
+            ] + $vars;
 
         } catch (\Exception $e) {
             return ['Error' => $e->getMessage()];
-        } 
+        }
     }
     return [];
 }
@@ -525,7 +525,7 @@ function AMP_AdminServicesTabFieldsSave(array $params)
 
 function AMP_ClientArea(array $params)
 {
-    
+
     $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
     $client = new Client($params);
 
@@ -537,36 +537,36 @@ function AMP_ClientArea(array $params)
                 $result = AMP_startInstance($params);
                 $r = ($result == 'success') ? 'success' : 'failure';
                 $m = ($result == 'success') ? 'Application has been started successfully' : $result;
-                echo json_encode(['result' => $r, 'message' => $m]);   
+                echo json_encode(['result' => $r, 'message' => $m]);
             break;
             case 'stopInstance':
                 $result = AMP_stopInstance($params);
                 $r = ($result == 'success') ? 'success' : 'failure';
                 $m = ($result == 'success') ? 'Application has been stopped successfully' : $result;
-                echo json_encode(['result' => $r, 'message' => $m]);   
+                echo json_encode(['result' => $r, 'message' => $m]);
             break;
             case 'restartInstance':
                 $result = AMP_restartInstance($params);
                 $r = ($result == 'success') ? 'success' : 'failure';
                 $m = ($result == 'success') ? 'Application has been restarted successfully' : $result;
-                echo json_encode(['result' => $r, 'message' => $m]);   
+                echo json_encode(['result' => $r, 'message' => $m]);
             break;
             case 'resetPassword':
                 $result = AMP_resetPassword($params);
                 $r = ($result == 'success') ? 'success' : 'failure';
                 $m = ($result == 'success') ? 'Application password has ben reseted successfully' : $result;
-                echo json_encode(['result' => $r, 'message' => $m]);   
+                echo json_encode(['result' => $r, 'message' => $m]);
             break;
             case 'ClearInstanceFromWHMCS':
                 $result = AMP_ClearInstanceFromWHMCS($params);
                 $r = ($result == 'success') ? 'success' : 'failure';
                 $m = ($result == 'success') ? 'Dismissed tasks' : $result;
                 echo json_encode(['result' => $r, 'message' => $m]);
-            break;             
+            break;
         }
         die;
     }
-	
+
 	    $vars['mode'] = isset($params['configoption6']) ? $params['configoption6'] : 'Standalone URL';
 
 
@@ -603,8 +603,8 @@ function AMP_ClientArea(array $params)
     return array(
         'templatefile' => 'templates/overview',
         'vars' => $vars,
-    );  
-}  
+    );
+}
 
 
 function AMP_AdminCustomButtonArray()
@@ -622,7 +622,7 @@ function AMP_startInstance(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -632,7 +632,7 @@ function AMP_startInstance(array $params)
             'InstanceName' => $service->instanceId
         ];
         $client->call('ADSModule/StartInstance', $data);
-      
+
 
         return 'success';
 
@@ -645,7 +645,7 @@ function AMP_stopInstance(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -667,7 +667,7 @@ function AMP_restartInstance(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
@@ -689,7 +689,7 @@ function AMP_resetPassword(array $params)
 {
     try {
         AMP_commercialCheck($params);
-        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();                    
+        $service = Capsule::table('ampServices')->where('serviceId', $params['serviceid'])->first();
         if(empty($service->instanceId))
         {
             return 'Instance ID not found';
