@@ -44,7 +44,7 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 		Congratulations {$client_name},
 		
-		Your order has now been activated and you are minuets away from starting an epic journey with your friends in {$service_product_name}
+		Your order has now been activated and you are minutes away from starting an epic journey with your friends in {$service_product_name}
 		
 		
 		
