@@ -176,12 +176,14 @@ $fields = [
         'Type' => 'dropdown',
         'Options' =>
         [
-            0 => 'Do nothing',
-            1 => 'Start instance only',
-            2 => 'Start instance & update application',
-            3 => 'Full instance & application startup',
+            0 => 'Do Nothing',
+            1 => 'Update Once',
+            2 => 'Update Always',
+            3 => 'Update and Start Once',
+            4 => 'Update and Start Always',
+            5 => 'Start Always',
         ],
-        'Description' => '<br><br>Choose what happens after AMP has created the instance'.$script,
+        'Description' => '<br><br>Choose what the application does inside the instance AMP creates'.$script,
     ),
     'Required Tags' => array(
         'Type' => 'text',
@@ -194,10 +196,6 @@ $fields = [
         'Size' => '25',
         'Default' => '',
         'Description' => $scriptExtraProvisionSettings.'<br>',
-    ),
-	'Update Every Time' => array(
-        'Type' => 'yesno',
-        'Description' => 'Tick this box to update the application every time the instance starts in the future',
     ),
 	"Mode" => array(
          'Type' => 'dropdown',
@@ -279,10 +277,7 @@ function AMP_CreateAccount(array $params)
         $client = new Client($params);
         $provisioningTemplateId = $params['configoption1'];
         $postCreate = !empty($params['configoption2']) ? $params['configoption2'] : 0;
-		// Check if the 'Every Time' box is ticked and if so, add 16 to the PostCreate value
-        if (!empty($params['configoption5'])) {
-            $postCreate += 16;
-		}
+
         $templates = $client->call('ADSModule/GetDeploymentTemplates');
 
         $options = [];
@@ -567,7 +562,7 @@ function AMP_ClientArea(array $params)
         die;
     }
 
-	    $vars['mode'] = isset($params['configoption6']) ? $params['configoption6'] : 'Standalone URL';
+	    $vars['mode'] = isset($params['configoption5']) ? $params['configoption5'] : 'Standalone URL';
 
 
     if(!empty($service->instanceId))

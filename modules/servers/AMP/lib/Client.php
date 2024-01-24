@@ -10,7 +10,7 @@ class Client
 	public $version;
 	public function __construct(array $params)
     {
-		$this->version = '2.0.6.0';
+		$this->version = '2.4.8.0';
 		$this->params = new \stdClass;
     $endpoint = (!empty($params['serverhostname']) ? $params['serverhostname'] : $params['serverip']);
     $this->params->serverId = $params['serverid'];
