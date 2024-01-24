@@ -176,7 +176,7 @@ $fields = [
         'Type' => 'dropdown',
         'Options' =>
         [
-            0 => 'Do nothing',
+            0 => 'Do Nothing',
             1 => 'Update Once',
             2 => 'Update Always',
             3 => 'Update and Start Once',
