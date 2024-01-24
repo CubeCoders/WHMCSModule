@@ -13,7 +13,7 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 - For the Module type, select **AMP**
 - Enter the hostname for your AMP server followed by a Username and Password
 
-- Note: You should create a seperate AMP user for WHMCS with the Super Admin Role and ensure MFA is disabled for this user.
+- Note: You should create a separate AMP user for WHMCS with the Super Admin Role and ensure MFA is disabled for this user.
 
 6. Click **Test Connection**
 
@@ -44,7 +44,7 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 
 		Congratulations {$client_name},
 		
-		Your order has now been activated and you are minuets away from starting an epic journey with your friends in {$service_product_name}
+		Your order has now been activated and you are minutes away from starting an epic journey with your friends in {$service_product_name}
 		
 		
 		
@@ -130,17 +130,17 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 - The **Provisioning Template** allows you to select your deployment template within AMP for specific server you want to deploy
 - Then select the **Post Create Action** from the below list depending on your desired outcome
 
-		Do Nothing = Creates instance and doesnt start the instance or application
-		Start Instance = Creates and starts the instance but doesnt start the application automatcially
+		Do Nothing = Creates instance and doesn't start the instance or application
+		Start Instance = Creates and starts the instance but doesn't start the application automatically
 		Start instance & update application = Creates & Starts the instance and performs an application update.
-		Full Instance & application startup = Creates & Starts the instance and starts & updates the application and starts the application everytime the instance starts. (Providing no additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in)
+		Full Instance & application startup = Creates & Starts the instance and starts & updates the application and starts the application every time the instance starts. (Providing no additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in)
   
 - Set the **Required Tags** field as per below
 - If you are running AMP in **Standalone** or Hybrid mode, enter the value ‘Local’
 - If you are running AMP in **Controller/Target** mode, enter the Tag value that you have set on a Target within the AMP panel
-- Extra Provision Setting field allows you to set a static setting that will apply to all Instances created for this product. If you wish to sell customisable parameters such as RAM & CPU allocations, please see the Configurable Options section further down.
-- The **Update Every Tim**e option tells AMP if the application should be updated everytime the instance is started in teh future
-- The **Mode** selection allows you to specify how teh Endpoints are displayed in the Client section of WHMCS. For example:
+- Extra Provision Setting field allows you to set a static setting that will apply to all Instances created for this product. If you wish to sell customizable parameters such as RAM & CPU allocations, please see the Configurable Options section further down.
+- The **Update Every Tim**e option tells AMP if the application should be updated everytime the instance is started in the future
+- The **Mode** selection allows you to specify how the Endpoints are displayed in the Client section of WHMCS. For example:
   
 		Standalone URL will be displayed as https://yourdomain.com:25565
 		Target/Node IP Address will be displayed as 0.0.0.0:25565
@@ -161,7 +161,7 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 2. Click on **Create a New Group** and give it a name such as ‘AMP Product Options’ 
 3. From the Assigned Products select the products that these configurable options applies to
 4. Click on **Add New Configurable Option**
-5. Enter the configrable option that you would like to set from the list below and click **Save Changes**
+5. Enter the configurable option that you would like to set from the list below and click **Save Changes**
 
    <h3> Example Configurable Options</h3>
 
