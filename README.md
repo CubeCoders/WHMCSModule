@@ -128,18 +128,19 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
   
 - You will now see new fields appear that are specific to this product
 - The **Provisioning Template** allows you to select your deployment template within AMP for specific server you want to deploy
-- Then select the **Post Create Action** from the below list depending on your desired outcome
+- Then select the **Post Create Action** from the below list depending on your desired outcome. The instance is always started. Updates and/or starts may not complete if additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in.
 
-		Do Nothing = Creates instance and doesn't start the instance or application
-		Start Instance = Creates and starts the instance but doesn't start the application automatically
-		Start instance & update application = Creates & Starts the instance and performs an application update.
-		Full Instance & application startup = Creates & Starts the instance and starts & updates the application and starts the application every time the instance starts. (Providing no additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in)
+		Do Nothing = Doesn't start the application
+		Update Once = Updates but doesn't start the application automatically
+		Update Always = Performs an application update every instance start
+		Update and Start Once = Updates the application and starts the application once
+		Update and Start Always = Updates the application and starts the application every instance start
+		Start Always = Updates and starts the application once, then starts the application every future instance start
   
 - Set the **Required Tags** field as per below
 - If you are running AMP in **Standalone** or Hybrid mode, enter the value ‘Local’
 - If you are running AMP in **Controller/Target** mode, enter the Tag value that you have set on a Target within the AMP panel
 - Extra Provision Setting field allows you to set a static setting that will apply to all Instances created for this product. If you wish to sell customizable parameters such as RAM & CPU allocations, please see the Configurable Options section further down.
-- The **Update Every Tim**e option tells AMP if the application should be updated everytime the instance is started in the future
 - The **Mode** selection allows you to specify how the Endpoints are displayed in the Client section of WHMCS. For example:
   
 		Standalone URL will be displayed as https://yourdomain.com:25565
