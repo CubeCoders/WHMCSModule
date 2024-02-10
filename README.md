@@ -2,6 +2,11 @@
 
 This WHMCS module provides provisioning integration with CubeCoders AMP with WHMCS.
 
+<h2>Prerequisites</h2>
+This guide assumes you have knowledge of WHMCS and the software is configured for basic use. More information can be found on https://www.whmcs.com.
+
+Ensure you have configured your ADS instances by following the [Configuring AMP for Enterprise or Network Usage](https://discourse.cubecoders.com/t/configuring-amp-for-enterprise-or-network-usage/1830) guide.
+
 <h2>Installing the AMP WHMCS module</h2>
 
 1. Download the .Zip file from this GitHub
