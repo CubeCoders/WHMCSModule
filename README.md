@@ -9,11 +9,14 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 
 <h2>Installing the AMP WHMCS module</h2>
 
-1. Download the .Zip file from this GitHub
-2. Upload the package content into your MAIN WHMCS DIRECTORY.  (We recommend using an FTP Client)
-3. Login to WHMCS Admin Area 
-4. Navigate to **System Settings -> Product & Services -> Servers**
-5. Click on **Add New Server** 
+1. Download the [Zip file](https://github.com/CubeCoders/WHMCSModule/archive/refs/heads/main.zip) from this GitHub
+2. Upload the package content into your main WHMCS directory.  (We recommend using an FTP Client)
+
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/d782288e-68bc-4024-9637-9a51ab3a0e0c)
+
+4. Login to WHMCS Admin Area 
+5. Navigate to **System Settings -> Product & Services -> Servers**
+6. Click on **Add New Server** 
 
 - For the Module type, select **AMP**
 - Enter the hostname for your AMP server followed by a Username and Password
