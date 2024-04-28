@@ -16,24 +16,29 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 
 4. Login to WHMCS Admin Area 
 5. Navigate to **System Settings -> Product & Services -> Servers**
-6. Click on **Add New Server** 
+6. Click on **Add New Server** and enter the following:
 
-- For the Module type, select **AMP**
-- Enter the hostname for your AMP server followed by a Username and Password
+- Name - Any name to distinguish the server in WHMCS
+- Hostname - The URI for your server excluding `https://`
+- Module - **AMP**
+- Username and Password - An AMP user made specifically for use with WHMCS that has the Super Admin role and MFA disabled
+- Secure - Check the box for "Check to use SSL Mode for Connections"
 
-- Note: You should create a separate AMP user for WHMCS with the Super Admin Role and ensure MFA is disabled for this user.
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/355daf3d-cd5d-4ef0-93ae-99d805595d39)
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/9f591032-8c97-4990-a1eb-75bc32cf6da5)
+
 
 6. Click **Test Connection**
 
-- If the connection was successful you will see a green banner confirming the connection at the top
-
-- Enter a Name for this AMP server that will be displayed in WHMCS
+- If the connection was successful you will see a green banner that says `Connection successful. Some values have been auto-filled.`
 
 7. Click **Save Changes**
 8. From the Servers overview page click on **Create New Group** 
 
 - Enter a Name for your AMP Server Group
 - Select your AMP Server(s) from the list and Add to Selected Servers
+
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/a6190160-bc24-4cf4-ba5b-ab82f9e52217)
 
 9. Click **Save Changes**
 
