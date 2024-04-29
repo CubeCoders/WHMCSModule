@@ -121,6 +121,7 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 
 ⚠️ Ensure to change WHMCS_URL to your own domain where WHMCS is installed as this will allow AMP to tell WHMCS once the product is created and the status of the instance.
 
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/d9a63007-3fa5-419f-952c-0108e268f64b)
 
 <h2>Setting up a Server Group & Product within WHMCS</h2>
 
@@ -189,6 +190,18 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 6. Further values can be set using a template as described in the following article or can be set in WHMCS directly by adding a `+` to the beginning of the key.
 [Configuring AMP for Enterprise or Network Usage](https://discourse.cubecoders.com/t/configuring-amp-for-enterprise-or-network-usage/1830)
     
+<h2>Troubleshooting</h2>
+
+You can view a large portion of the communication between AMP and WHMCS by enabling debug logging in both.
+1. In WHMCS, go to **System Logs -> Module Log** and enable Module Logging.
+2. In AMP, search for "Debug" in the top right to change the logging level.
+3. Repeat the action you were trying and look for output from both sides.
+4. If you cannot figure out the issue on your own, you can share the logs through the support channels.
+
+⚠️ The logs contain sensitive information, so be sure to remove any details you do not want public before sharing for support!
+
+![image](https://github.com/CubeCoders/WHMCSModule/assets/96364530/8340d40b-0a4b-43eb-9e85-4c6e0aa63718)
+
 <h2>FAQ’s</h2>
 
 Q: Do I need to set a Product Welcome Email in each product?
