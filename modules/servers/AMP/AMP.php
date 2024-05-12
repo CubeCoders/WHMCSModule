@@ -202,7 +202,12 @@ $fields = [
          'Options' => 'Standalone URL,Target/Node IP Address',
          'Default' => 'Target/Node IP Address',
          'Description' => '<br><br>Select how the Endpoints should be displayed on the Client section within WHMCS',
-        )
+    ),
+	"WHMCS Module Version" => array(
+         'Type' => 'readonly',
+         'Default' => '',
+         'Description' => '1.0',
+    )
 ];
 return $fields;
 
