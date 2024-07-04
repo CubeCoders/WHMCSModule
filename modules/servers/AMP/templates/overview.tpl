@@ -36,7 +36,7 @@
                 <p>Manage your Game Server Console to control a wide range of functions, including controlling settings, plugins, mods, backups, and many other features.</p>
             </div>
             <div class="col-sm-4 text-sm-right text-center">
-                <button style="margin-left: 0px; " onclick="window.open('{$appUrl}/?instance={$instanceId}', '_blank')" class="btn btn-success">Open Game Server Control Panel</button>
+                <button style="margin-left: 0px; " onclick="window.open('{$appUrl}/remote/{$instanceId}', '_blank')" class="btn btn-success">Open Game Server Control Panel</button>
             </div>
         </div>
         <p>&nbsp;</p>
