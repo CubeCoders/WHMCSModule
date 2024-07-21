@@ -189,6 +189,11 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 			1024|1 GB
 			2048|2 GB
 			4096|4 GB
+  If you want to add additional Required Tags that are selectable by the client, you can prefix the settings with `@` like below:
+  
+		@RequiredTags|Datacenter
+			US|United States
+			EU|Europe
 6. Further values can be set using a template as described in the following article or can be set in WHMCS directly by adding a `+` to the beginning of the key.
 [Configuring AMP for Enterprise or Network Usage](https://discourse.cubecoders.com/t/configuring-amp-for-enterprise-or-network-usage/1830)
     
