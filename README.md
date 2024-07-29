@@ -141,7 +141,9 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 - Click on the **Module Settings** tab
 - Ensure that Module Name is set to **AMP**
 - Click on the Server Group drop down menu and select the Server Group you created earlier
-  
+
+![image](https://github.com/user-attachments/assets/2679e470-293f-42ed-b51c-1aeb28bef99e)
+
 - You will now see new fields appear that are specific to this product
 - The **Provisioning Template** allows you to select your deployment template within AMP for specific server you want to deploy
 - Then select the **Post Create Action** from the below list depending on your desired outcome. The instance is always started. Updates and/or starts may not complete if additional setup is required on the customers behalf such as EULA acknowledgement or Steam sign in.
