@@ -323,6 +323,17 @@ function AMP_CreateAccount(array $params)
             }
         }
 
+        foreach ($params['customfields'] as $key => $value) {
+            if($key[0] == '+')
+            {
+                $extraProvisionSettings[substr($key,1)] = $value;
+            }
+            elseif($key[0] == '@')
+            {
+                $requiredTags[] = $value;
+            }
+        }
+
         $data = [
             'TemplateID' => $provisioningTemplateId,
             'NewUsername' => $username,
