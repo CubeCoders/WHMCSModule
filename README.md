@@ -142,7 +142,8 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 - Ensure that Module Name is set to **AMP**
 - Click on the Server Group drop down menu and select the Server Group you created earlier
 
-![image](https://github.com/user-attachments/assets/2679e470-293f-42ed-b51c-1aeb28bef99e)
+![image](https://github.com/user-attachments/assets/31af6d75-6db5-457c-81d7-3538a5e6d1b9)
+
 
 - You will now see new fields appear that are specific to this product
 - The **Provisioning Template** allows you to select your deployment template within AMP for specific server you want to deploy
@@ -172,7 +173,7 @@ Ensure you have configured your ADS instances by following the [Configuring AMP 
 
 You’re ready to go! Module is ready to use. After activation of ordered product, module will wait for callback - then Application URL will be show in client area.
 
-<h2>Configurable Options</h2>
+<h2>Configurable Options & Custom Fields</h2>
 
 You can set custom configuration options within WHMCS for settings such as RAM Allocation & CPU Allocation. 
 
@@ -196,9 +197,17 @@ You can set custom configuration options within WHMCS for settings such as RAM A
 		@RequiredTags|Datacenter
 			US|United States
 			EU|Europe
-6. Further values can be set using a template as described in the following article or can be set in WHMCS directly by adding a `+` to the beginning of the key.
+
+![image](https://github.com/user-attachments/assets/6da3fbd2-9d65-40a7-a6d0-ada9325d38d6)
+![image](https://github.com/user-attachments/assets/e86b84b7-764b-446c-b2af-3e13ab5f91c2)
+
+6. You can configure Custom Fields in a similar way by navigating back to **System Settings -> Products & Services -> Products/Services**. These can be useful for allowing a user to set values for settings on server creation.
+
+![image](https://github.com/user-attachments/assets/9de9379e-3c1d-41af-b2be-849d8f216806)
+  
+7. Further values can be set using a template as described in the following article or can be set in WHMCS directly by adding a `+` to the beginning of the key.
 [Configuring AMP for Enterprise or Network Usage](https://discourse.cubecoders.com/t/configuring-amp-for-enterprise-or-network-usage/1830)
-    
+
 <h2>Troubleshooting</h2>
 
 You can view a large portion of the communication between AMP and WHMCS by enabling debug logging in both.
