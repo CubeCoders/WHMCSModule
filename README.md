@@ -5,6 +5,8 @@ This WHMCS module provides provisioning integration with CubeCoders AMP with WHM
 <h2>Prerequisites</h2>
 This guide assumes you have knowledge of WHMCS and the software is configured for basic use. More information can be found on https://www.whmcs.com.
 
+WHMCS must be configured as its own subdomain (e.g. whmcs.example.com).
+
 WHMCS CANNOT be in Maintenance Mode or you will fail to receive callbacks.
 
 Ensure you have configured your ADS instances by following the [Configuring AMP for Enterprise or Network Usage](https://discourse.cubecoders.com/t/configuring-amp-for-enterprise-or-network-usage/1830) guide.
